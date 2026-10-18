@@ -255,7 +255,7 @@ st.caption(f"Sumber data: [USGS Earthquake Feed]({USGS_URL})")
 
 # 5. Tampilkan Info Auto Refresh (Hanya sekali saja)
 if auto_refresh:
-    st.caption(f"🚴 Pembaruan otomatis aktif setiap {interval} detik.")
+    st.caption(f"🚴 Pembaruan otomatis aktif setiap detik.")
 
 # =========================================================
 # 6. LOAD DATA
