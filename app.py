@@ -43,7 +43,7 @@ jumlah_tabel = st.sidebar.slider(
 )
 
 if auto_refresh:
-    st_autorefresh(interval=interval * 30000, key="gempa_refresh")
+    st_autorefresh(interval=30000, key="gempa_refresh")
 
 if st.sidebar.button("🔄 Muat ulang data sekarang"):
     st.cache_data.clear()
