@@ -27,12 +27,6 @@ auto_refresh = st.sidebar.toggle(
     "Pembaruan otomatis",
     value=True
 )
-interval = st.sidebar.selectbox(
-    "Interval pembaruan",
-    options=[30, 60, 120],
-    index=1,
-    format_func=lambda x: f"{x} detik",
-)
 minimum_magnitudo = st.sidebar.slider(
     "Magnitudo minimum untuk tabel dan peta",
     min_value=0.0,
@@ -49,7 +43,7 @@ jumlah_tabel = st.sidebar.slider(
 )
 
 if auto_refresh:
-    st_autorefresh(interval=interval * 1000, key="gempa_refresh")
+    st_autorefresh(interval=interval * 30000, key="gempa_refresh")
 
 if st.sidebar.button("🔄 Muat ulang data sekarang"):
     st.cache_data.clear()
@@ -122,7 +116,7 @@ def format_tanggal_indonesia(tanggal):
 # =========================================================
 # 3. AMBIL DATA USGS
 # =========================================================
-@st.cache_data(ttl=60, show_spinner=False)
+@st.cache_data(ttl=30, show_spinner=False)
 def fetch_earthquake_data():
     response = requests.get(USGS_URL, timeout=30)
     response.raise_for_status()
