@@ -519,6 +519,63 @@ else:
     st.plotly_chart(fig_area, use_container_width=True)
 
 # =========================================================
+# TABEL 10 GEMPA TERBARU (DENGAN TIME-BASED ROLLING WINDOW)
+# =========================================================
+st.subheader("📋 10 Gempa Bumi Terbaru")
+
+# 1. Buat filter Rolling Window (Time-based) di sidebar (Opsional)
+rentang_jam = st.sidebar.selectbox(
+    "Rentang Waktu (Rolling Window)",
+    options=[1, 6, 24, 720], # 720 jam = 30 hari
+    index=3, # Default 30 hari
+    format_func=lambda x: f"{x} jam terakhir" if x < 720 else "30 hari terakhir"
+)
+
+# 2. Filter data berdasarkan rentang waktu
+sekarang = datetime.now(WITA)
+batas_waktu = sekarang - timedelta(hours=rentang_jam)
+df_window = df[df["waktu"] >= batas_waktu].copy()
+
+# 3. Hitung Rolling Statistic (Rata-rata magnitudo dari 10 kejadian terakhir)
+# Kita urutkan dari yang terlama ke terbaru dulu agar hitungan rolling-nya benar
+df_window = df_window.sort_values("waktu", ascending=True)
+df_window["rolling_mean_10"] = df_window["magnitudo"].rolling(window=10, min_periods=1).mean()
+
+# 4. Balikkan lagi urutannya (terbaru di atas) dan ambil 10 teratas
+df_10 = df_window.sort_values("waktu", ascending=False).head(10).copy()
+
+# 5. Format waktu
+df_10["waktu"] = df_10["waktu"].apply(format_waktu)
+
+# 6. Pilih kolom dan ganti nama
+tabel_10 = df_10[[
+    "waktu", "lokasi", "magnitudo", "rolling_mean_10", "kedalaman", "url"
+]].rename(columns={
+    "waktu": "Waktu (WITA)",
+    "lokasi": "Lokasi Kejadian",
+    "magnitudo": "Magnitudo",
+    "rolling_mean_10": "Rata-rata 10 Gempa (Rolling)",
+    "kedalaman": "Kedalaman (km)",
+    "url": "Tautan"
+})
+
+# 7. Tampilkan tabel interaktif
+st.dataframe(
+    tabel_10,
+    use_container_width=True,
+    hide_index=True,
+    column_config={
+        "Magnitudo": st.column_config.NumberColumn(format="%.1f"),
+        "Rata-rata 10 Gempa (Rolling)": st.column_config.NumberColumn(format="%.2f", help="Rata-rata magnitudo dari 10 kejadian terakhir"),
+        "Kedalaman (km)": st.column_config.NumberColumn(format="%.1f km"),
+        "Tautan": st.column_config.LinkColumn(
+            "Tautan", 
+            display_text="Buka USGS"
+        )
+    }
+)
+
+# =========================================================
 # 13. UNDUH DATA DAN CATATAN
 # =========================================================
 st.download_button(
