@@ -169,16 +169,16 @@ def kategori_magnitudo(magnitudo):
     if magnitudo < 3.0:
         return "Kecil (< 3,0)"
     elif magnitudo < 5.0:
-        return "Rendah-sedang (3,0 <= 5,0)"
+        return "Rendah-sedang (3,0 ≤ 5,0)"
     elif magnitudo < 6.0:
-        return "Cukup besar (5,0 <= 6,0)"
+        return "Cukup besar (5,0 ≤ 6,0)"
     return "Besar (≥ 6,0)"
 
 
 WARNA_MAGNITUDO = {
     "Kecil (< 3,0)": "#22C55E",
-    "Rendah-sedang (3,0 <= 5,0)": "#EAB308",
-    "Cukup besar (5,0 <= 6,0)": "#F97316",
+    "Rendah-sedang (3,0 ≤ 5,0)": "#EAB308",
+    "Cukup besar (5,0 ≤ 6,0)": "#F97316",
     "Besar (≥ 6,0)": "#EF4444",
 }
 
@@ -472,8 +472,8 @@ st.write("Grafik ini menunjukkan fluktuasi jumlah gempa setiap harinya. Arahkan 
 # Definisi urutan kategori
 urutan_kategori = [
     "Kecil (< 3,0)",
-    "Rendah-sedang (3,0–< 5,0)",
-    "Cukup besar (5,0–< 6,0)",
+    "Rendah-sedang (3,0 ≤ 5,0)",
+    "Cukup besar (5,0 ≤ 6,0)",
     "Besar (≥ 6,0)",
 ]
 
