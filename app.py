@@ -597,7 +597,7 @@ with st.expander("Sumber data dan rumus"):
         **Rumus IQR:**
         - IQR = Q3 − Q1
         - Batas bawah = Q1 − 1,5 × IQR
-        - Batas atas = Q3 + 3.0 × IQR
+        - Batas atas = Q3 + 1,5 × IQR
 
         Nilai di luar batas tersebut ditandai sebagai pencilan statistik.
         Perhitungan menggunakan semua magnitudo yang tersedia pada feed;
